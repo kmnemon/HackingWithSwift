@@ -65,6 +65,7 @@ struct EditView: View {
         }
     }
 
+    //@escaping save the closure for later use
     init(location: Location, onSave: @escaping (Location) -> Void) {
         self.location = location
         self.onSave = onSave
@@ -92,8 +93,6 @@ struct EditView: View {
     }
 }
 
-struct EditView_Previews: PreviewProvider {
-    static var previews: some View {
-        EditView(location: Location.example) { _ in }
-    }
+#Preview {
+    EditView(location: .example) { _ in }
 }
