@@ -3,7 +3,7 @@
 //  Flashzilla
 //
 //  Created by Paul Hudson on 07/01/2022.
-//
+// modify support ios 17 by Ke
 
 import SwiftUI
 
@@ -18,6 +18,7 @@ struct ContentView: View {
     @Environment(\.accessibilityDifferentiateWithoutColor) var differentiateWithoutColor
     @Environment(\.accessibilityVoiceOverEnabled) var voiceOverEnabled
     @State private var cards = [Card]()
+//    @State private var cards = Array<Card>(repeating: .example, count: 10)
 
     @State private var timeRemaining = 100
     let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
@@ -29,14 +30,14 @@ struct ContentView: View {
 
     var body: some View {
         ZStack {
-            Image("background")
+            Image(decorative: 	"background")
                 .resizable()
                 .ignoresSafeArea()
 
             VStack {
                 Text("Time: \(timeRemaining)")
                     .font(.largeTitle)
-                    .foregroundColor(.white)
+                    .foregroundStyle(.white)
                     .padding(.horizontal, 20)
                     .padding(.vertical, 5)
                     .background(.black.opacity(0.75))
@@ -60,7 +61,7 @@ struct ContentView: View {
                     Button("Start Again", action: resetCards)
                         .padding()
                         .background(.white)
-                        .foregroundColor(.black)
+                        .foregroundStyle(.black)
                         .clipShape(Capsule())
                 }
             }
@@ -81,7 +82,7 @@ struct ContentView: View {
 
                 Spacer()
             }
-            .foregroundColor(.white)
+            .foregroundStyle(.white)
             .font(.largeTitle)
             .padding()
 
@@ -118,7 +119,7 @@ struct ContentView: View {
                         .accessibilityLabel("Correct")
                         .accessibilityHint("Mark your answer is being correct.")
                     }
-                    .foregroundColor(.white)
+                    .foregroundStyle(.white)
                     .font(.largeTitle)
                     .padding()
                 }
@@ -169,8 +170,6 @@ struct ContentView: View {
     }
 }
 
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
-    }
+#Preview {
+    ContentView()
 }

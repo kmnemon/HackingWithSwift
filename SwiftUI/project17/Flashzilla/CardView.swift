@@ -8,15 +8,16 @@
 import SwiftUI
 
 struct CardView: View {
-    let card: Card
-    var removal: (() -> Void)? = nil
-
-    @State private var feedback = UINotificationFeedbackGenerator()
-
     @Environment(\.accessibilityDifferentiateWithoutColor) var differentiateWithoutColor
     @Environment(\.accessibilityVoiceOverEnabled) var voiceOverEnabled
+    
+    @State private var feedback = UINotificationFeedbackGenerator()
+
     @State private var isShowingAnswer = false
     @State private var offset = CGSize.zero
+    
+    let card: Card
+    var removal: (() -> Void)? = nil
 
     var body: some View {
         ZStack {
@@ -42,16 +43,16 @@ struct CardView: View {
                 } else {
                     Text(card.prompt)
                         .font(.largeTitle)
-                        .foregroundColor(.black)
+                        .foregroundStyle(.black)
 
                     if isShowingAnswer {
                         Text(card.answer)
                             .font(.title)
-                            .foregroundColor(.gray)
+                            .foregroundStyle(.secondary)
                     }
                 }
             }
-            .padding()
+            .padding(20)
             .multilineTextAlignment(.center)
         }
         .frame(width: 450, height: 250)
@@ -86,8 +87,7 @@ struct CardView: View {
     }
 }
 
-struct CardView_Previews: PreviewProvider {
-    static var previews: some View {
-        CardView(card: Card.example)
-    }
+#Preview {
+    CardView(card: .example)
 }
+       

@@ -14,7 +14,7 @@ struct EditCards: View {
     @State private var newAnswer = ""
 
     var body: some View {
-        NavigationView {
+        NavigationStack {
             List {
                 Section("Add new card") {
                     TextField("Prompt", text: $newPrompt)
@@ -78,8 +78,6 @@ struct EditCards: View {
     }
 }
 
-struct EditCards_Previews: PreviewProvider {
-    static var previews: some View {
-        EditCards()
-    }
+#Preview {
+    EditCards()
 }
