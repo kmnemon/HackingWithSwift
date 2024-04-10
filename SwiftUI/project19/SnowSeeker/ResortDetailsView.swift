@@ -45,8 +45,6 @@ struct ResortDetailsView: View {
     }
 }
 
-struct ResortDetailsView_Previews: PreviewProvider {
-    static var previews: some View {
-        ResortDetailsView(resort: Resort.example)
-    }
+#Preview {
+        ResortDetailsView(resort: .example)
 }

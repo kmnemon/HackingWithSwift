@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Resort: Codable, Identifiable {
+struct Resort: Codable, Identifiable, Hashable {
     let id: String
     let name: String
     let country: String

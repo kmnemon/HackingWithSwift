@@ -30,8 +30,6 @@ struct SkiDetailsView: View {
     }
 }
 
-struct SkiDetailsView_Previews: PreviewProvider {
-    static var previews: some View {
-        SkiDetailsView(resort: Resort.example)
-    }
+#Preview {
+    SkiDetailsView(resort:  .example)
 }

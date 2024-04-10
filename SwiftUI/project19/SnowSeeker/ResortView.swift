@@ -10,8 +10,8 @@ import SwiftUI
 struct ResortView: View {
     let resort: Resort
 
-    @Environment(\.horizontalSizeClass) var sizeClass
-    @Environment(\.dynamicTypeSize) var typeSize
+    @Environment(\.horizontalSizeClass) var horizontalSizeClass
+    @Environment(\.dynamicTypeSize) var dynamicTypeSize
 
     @EnvironmentObject var favorites: Favorites
 
@@ -26,7 +26,7 @@ struct ResortView: View {
                     .scaledToFit()
 
                 HStack {
-                    if sizeClass == .compact && typeSize > .large {
+                    if horizontalSizeClass == .compact && dynamicTypeSize > .large {
                         VStack(spacing: 10) { ResortDetailsView(resort: resort) }
                         VStack(spacing: 10) { SkiDetailsView(resort: resort) }
                     } else {
@@ -44,28 +44,31 @@ struct ResortView: View {
 
                     Text("Facilities")
                         .font(.headline)
+                    
+                    Text(resort.facilities, format: .list(type: .and))
+                        .padding(.vertical)
 
-                    HStack {
-                        ForEach(resort.facilityTypes) { facility in
-                            Button {
-                                selectedFacility = facility
-                                showingFacility = true
-                            } label: {
-                                facility.icon
-                                    .font(.title)
-                            }
-                        }
-                    }
-
-                    Button(favorites.contains(resort) ? "Remove from Favorites" : "Add to Favorites") {
-                        if favorites.contains(resort) {
-                            favorites.remove(resort)
-                        } else {
-                            favorites.add(resort)
-                        }
-                    }
-                    .buttonStyle(.borderedProminent)
-                    .padding()
+//                    HStack {
+//                        ForEach(resort.facilityTypes) { facility in
+//                            Button {
+//                                selectedFacility = facility
+//                                showingFacility = true
+//                            } label: {
+//                                facility.icon
+//                                    .font(.title)
+//                            }
+//                        }
+//                    }
+//
+//                    Button(favorites.contains(resort) ? "Remove from Favorites" : "Add to Favorites") {
+//                        if favorites.contains(resort) {
+//                            favorites.remove(resort)
+//                        } else {
+//                            favorites.add(resort)
+//                        }
+//                    }
+//                    .buttonStyle(.borderedProminent)
+//                    .padding()
                 }
                 .padding(.horizontal)
             }
@@ -79,11 +82,10 @@ struct ResortView: View {
     }
 }
 
-struct ResortView_Previews: PreviewProvider {
-    static var previews: some View {
+
+#Preview {
         NavigationView {
             ResortView(resort: Resort.example)
         }
         .environmentObject(Favorites())
-    }
 }

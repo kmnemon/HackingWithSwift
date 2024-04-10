@@ -24,11 +24,9 @@ struct ContentView: View {
     @State private var searchText = ""
 
     var body: some View {
-        NavigationView {
+        NavigationSplitView {
             List(filteredResorts) { resort in
-                NavigationLink {
-                    ResortView(resort: resort)
-                } label: {
+                NavigationLink(value: resort) {
                     HStack {
                         Image(resort.country)
                             .resizable()
@@ -44,21 +42,24 @@ struct ContentView: View {
                             Text(resort.name)
                                 .font(.headline)
                             Text("\(resort.runs) runs")
-                                .foregroundColor(.secondary)
+                                .foregroundStyle(.secondary)
                         }
 
                         if favorites.contains(resort) {
                             Spacer()
                             Image(systemName: "heart.fill")
                                 .accessibilityLabel("This is a favorite resort")
-                                .foregroundColor(.red)
+                                .foregroundStyle(.red)
                         }
                     }
                 }
             }
             .navigationTitle("Resorts")
+            .navigationDestination(for: Resort.self) { resort in
+                ResortView(resort: resort)
+            }
             .searchable(text: $searchText, prompt: "Search for a resort")
-
+        } detail: {
             WelcomeView()
         }
         .environmentObject(favorites)
@@ -73,8 +74,6 @@ struct ContentView: View {
     }
 }
 
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
-    }
+#Preview {
+    ContentView()
 }
