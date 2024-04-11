@@ -5,9 +5,10 @@
 //  Created by Paul Hudson on 25/01/2022.
 //
 
-import Foundation
+import SwiftUI
 
-class Favorites: ObservableObject {
+@Observable
+class Favorites {
     private var resorts: Set<String>
     private let saveKey = "Favorites"
 
@@ -21,13 +22,11 @@ class Favorites: ObservableObject {
     }
 
     func add(_ resort: Resort) {
-        objectWillChange.send()
         resorts.insert(resort.id)
         save()
     }
 
     func remove(_ resort: Resort) {
-        objectWillChange.send()
         resorts.remove(resort.id)
         save()
     }

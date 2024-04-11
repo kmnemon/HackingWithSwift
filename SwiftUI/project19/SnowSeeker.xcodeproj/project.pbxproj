@@ -72,11 +72,11 @@
 				519D990F27973FF6004DD0D1 /* SnowSeekerApp.swift */,
 				519D991127973FF6004DD0D1 /* ContentView.swift */,
 				51BFC062279E06A2001ADED8 /* WelcomeView.swift */,
-				51BFC05E279E01C4001ADED8 /* Resort.swift */,
 				51BFC060279E025D001ADED8 /* Bundle-Decodable.swift */,
 				51BFC064279E0903001ADED8 /* ResortView.swift */,
 				51BFC068279E0A86001ADED8 /* ResortDetailsView.swift */,
 				51BFC066279E09E0001ADED8 /* SkiDetailsView.swift */,
+				51BFC05E279E01C4001ADED8 /* Resort.swift */,
 				518F97BB27A0A5440035AA81 /* Facility.swift */,
 				51BFC05C279E0141001ADED8 /* resorts.json */,
 				518F97BD27A0A9CA0035AA81 /* Favorites.swift */,
@@ -313,7 +313,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -343,7 +343,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

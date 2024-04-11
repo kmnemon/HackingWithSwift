@@ -31,7 +31,7 @@ struct Facility: Identifiable {
         if let iconName = icons[name] {
             return Image(systemName: iconName)
                 .accessibilityLabel(name)
-                .foregroundColor(.secondary)
+                .foregroundStyle(.secondary)
         } else {
             fatalError("Unknown facility type: \(name)")
         }
