@@ -11,7 +11,6 @@ struct ContentView: View {
     //    @State private var rps = ["rock", "paper", "scissors"]
     @State private var computerChoose = Int.random(in: 0...2)
     
-    @State private var wl: Int?
     @State private var score = 0
     @State private var count = 0
     
@@ -166,14 +165,11 @@ struct ContentView: View {
         }
         
         if computerChoose == userChoose {
-            wl = 0
             scoreTitle = "Draw"
         } else if (computerChoose + 1) % 3 == userChoose {
-            wl = 1
             score += 1
             scoreTitle = "You Win"
         } else {
-            wl = -1
             score -= 1
             scoreTitle = "You Lose"
         }
