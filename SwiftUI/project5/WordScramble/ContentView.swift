@@ -11,10 +11,13 @@ struct ContentView: View {
     @State private var usedWords = [String]()
     @State private var rootWord = ""
     @State private var newWord = ""
+    @State private var allWords = [String]()
 
     @State private var errorTitle = ""
     @State private var errorMessage = ""
     @State private var showingError = false
+    
+    @State private var score = 0
 
     var body: some View {
         NavigationStack {
@@ -39,6 +42,13 @@ struct ContentView: View {
             .alert(errorTitle, isPresented: $showingError) { } message: {
                 Text(errorMessage)
             }
+            .toolbar {
+                Button("Restart", systemImage: "restart", action: restartGame)
+            }
+            
+            Spacer()
+            Text("Player Score: \(score)")
+                .font(.title3)
         }
     }
 
@@ -46,6 +56,16 @@ struct ContentView: View {
         let answer = newWord.lowercased().trimmingCharacters(in: .whitespacesAndNewlines)
 
         guard answer.count > 0 else { return }
+        
+        guard isLongerThanTow(word: answer) else {
+            wordError(title: "Word less than three words", message: "Write more words")
+            return
+        }
+        
+        guard isNotEqualToStartWord(word: answer) else {
+            wordError(title: "Word is the same with start word", message: "do not write the same word")
+            return
+        }
 
         guard isOriginal(word: answer) else {
             wordError(title: "Word used already", message: "Be more original!")
@@ -66,19 +86,35 @@ struct ContentView: View {
             usedWords.insert(answer, at: 0)
         }
 
+        calcPlayerScore()
+        
         newWord = ""
     }
 
     func startGame() {
         if let startWordsURL = Bundle.main.url(forResource: "start", withExtension: "txt") {
             if let startWords = try? String(contentsOf: startWordsURL) {
-                let allWords = startWords.components(separatedBy: "\n")
+                allWords = startWords.components(separatedBy: "\n")
                 rootWord = allWords.randomElement() ?? "silkworm"
                 return
             }
         }
 
         fatalError("Could not load start.txt from bundle.")
+    }
+    
+    func restartGame() {
+        rootWord = allWords.randomElement() ?? "silkworm"
+        usedWords = []
+        score = 0
+    }
+    
+    func isLongerThanTow(word: String) -> Bool {
+        return word.count > 2
+    }
+    
+    func isNotEqualToStartWord(word: String) -> Bool {
+        return !(word == rootWord)
     }
 
     func isOriginal(word: String) -> Bool {
@@ -110,6 +146,12 @@ struct ContentView: View {
         errorTitle = title
         errorMessage = message
         showingError = true
+    }
+    
+    func calcPlayerScore() {
+        for word in usedWords {
+            score += word.count
+        }
     }
 }
 
