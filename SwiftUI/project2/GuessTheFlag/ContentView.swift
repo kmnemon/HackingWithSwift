@@ -40,6 +40,11 @@ struct ContentView: View {
     @State private var score = 0
     @State private var showingFinal = false
     @State private var count = 0
+    
+    @State private var animationAmounts = [0.0, 0.0, 0.0]
+    @State private var fadeOuts = [1.0, 1.0, 1.0]
+    @State private var scales = [1.0, 1.0, 1.0]
+    
 
     var body: some View {
         ZStack {
@@ -68,9 +73,24 @@ struct ContentView: View {
                     ForEach(0..<3) { number in
                         Button {
                             flagTapped(number)
+                            
+                            withAnimation {
+                                animationAmounts[number] += 360
+                                
+                                for index in 0..<3 {
+                                    if index != number {
+                                        fadeOuts[index] = 0.25
+                                        scales[index] = 0.5
+                                    }
+                                }
+                            }
                         } label: {
                             FlagImage(country: countries[number])
+                                .rotation3DEffect(.degrees(animationAmounts[number]), axis: (x: 0, y: 1, z: 0))
+                                .opacity(fadeOuts[number])
+                                .scaleEffect(scales[number])
                         }
+                       
                     }
                 }
                 .frame(maxWidth: .infinity)
@@ -120,11 +140,13 @@ struct ContentView: View {
     func askQuestion() {
         countries.shuffle()
         correctAnswer = Int.random(in: 0...2)
+        animationAmounts = [0.0, 0.0, 0.0]
+        fadeOuts = [1.0, 1.0, 1.0]
+        scales = [1.0, 1.0, 1.0]
     }
     
     func restart() {
-        countries.shuffle()
-        correctAnswer = Int.random(in: 0...2)
+        askQuestion()
         count = 0
         score = 0
     }
