@@ -22,6 +22,7 @@
 		8A436B352CBD2E9100E27C72 /* MissionCrewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A436B342CBD2E7900E27C72 /* MissionCrewView.swift */; };
 		8A436B372CBD31AE00E27C72 /* GridLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A436B362CBD31A000E27C72 /* GridLayout.swift */; };
 		8A436B392CBD339E00E27C72 /* ListLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A436B382CBD339800E27C72 /* ListLayout.swift */; };
+		8A65DE982CC0BB3F0051F3BE /* ItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A65DE972CC0BB320051F3BE /* ItemView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,6 +42,7 @@
 		8A436B342CBD2E7900E27C72 /* MissionCrewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MissionCrewView.swift; sourceTree = "<group>"; };
 		8A436B362CBD31A000E27C72 /* GridLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridLayout.swift; sourceTree = "<group>"; };
 		8A436B382CBD339800E27C72 /* ListLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListLayout.swift; sourceTree = "<group>"; };
+		8A65DE972CC0BB320051F3BE /* ItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,6 +75,7 @@
 		51FE10A52AEEF4DD00B2AD74 /* Moonshot */ = {
 			isa = PBXGroup;
 			children = (
+				8A65DE972CC0BB320051F3BE /* ItemView.swift */,
 				8A436B382CBD339800E27C72 /* ListLayout.swift */,
 				8A436B362CBD31A000E27C72 /* GridLayout.swift */,
 				8A436B342CBD2E7900E27C72 /* MissionCrewView.swift */,
@@ -178,6 +181,7 @@
 				51FE10BF2AF05CD500B2AD74 /* Color-Theme.swift in Sources */,
 				51FE10A92AEEF4DD00B2AD74 /* ContentView.swift in Sources */,
 				8A436B352CBD2E9100E27C72 /* MissionCrewView.swift in Sources */,
+				8A65DE982CC0BB3F0051F3BE /* ItemView.swift in Sources */,
 				51FE10A72AEEF4DD00B2AD74 /* MoonshotApp.swift in Sources */,
 				8A436B372CBD31AE00E27C72 /* GridLayout.swift in Sources */,
 				8A436B392CBD339E00E27C72 /* ListLayout.swift in Sources */,
