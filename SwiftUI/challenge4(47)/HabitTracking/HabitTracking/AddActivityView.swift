@@ -18,24 +18,28 @@ struct AddActivityView: View {
     var body: some View {
         NavigationStack {
             Form {
-                HStack {
-                    Text("Activity Title:")
-                    TextField("Activity Title", text: $activityTitle)
+                Section {
+                    HStack {
+                        Text("Activity Title:")
+                        TextField("Activity Title", text: $activityTitle)
+                    }
+                    
+                    HStack {
+                        Text("Activity Description:")
+                        TextField("Activity Description", text: $activityDescription)
+                    }
                 }
                 
-                HStack {
-                    Text("Activity Description:")
-                    TextField("Activity Description", text: $activityDescription)
+                Section {
+                    Button("Save") {
+                        let activity = Activity(id: UUID(), title: activityTitle, description: activityDescription)
+                        activities.activities.append(activity)
+                        dismiss()
+                    }
                 }
             }
             
             .toolbar {
-                Button("Save") {
-                    let activity = Activity(id: UUID(), title: activityTitle, description: activityDescription)
-                    activities.activities.append(activity)
-                    dismiss()
-                }
-                
                 Button("Cancel") {
                     dismiss()
                 }
