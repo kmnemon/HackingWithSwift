@@ -20,12 +20,13 @@ class Order: Codable {
         case _streetAddress = "streetAddress"
         case _zip = "zip"
     }
-
+    
+    
     static let types = ["Vanilla", "Strawberry", "Chocolate", "Rainbow"]
-
+    
     var type = 0
     var quantity = 3
-
+    
     var specialRequestEnabled = false {
         didSet {
             if specialRequestEnabled == false {
@@ -34,40 +35,56 @@ class Order: Codable {
             }
         }
     }
-
+    
     var extraFrosting = false
     var addSprinkles = false
-
+    
     var name = ""
-    var streetAddress = ""
+//    var streetAddress = ""
+    var streetAddress: String = UserDefaults.standard.string(forKey: "UserAddress") ?? "" {
+        didSet {
+            UserDefaults.standard.set(streetAddress, forKey: "UserAddress")
+        }
+    }
+
     var city = ""
     var zip = ""
-
+    
     var hasValidAddress: Bool {
+        if name.trimmingCharacters(in: .whitespaces).isEmpty ||
+            streetAddress.trimmingCharacters(in: .whitespaces).isEmpty ||
+            city.trimmingCharacters(in: .whitespaces).isEmpty ||
+            zip.trimmingCharacters(in: .whitespaces).isEmpty {
+            return false
+        }
+        
         if name.isEmpty || streetAddress.isEmpty || city.isEmpty || zip.isEmpty {
             return false
         }
-
+        
+//        UserDefaults.standard.set(streetAddress, forKey: "UserAddress")
+        
         return true
     }
-
+    
     var cost: Decimal {
         // $2 per cake
         var cost = Decimal(quantity) * 2
-
+        
         // complicated cakes cost more
         cost += Decimal(type) / 2
-
+        
         // $1/cake for extra frosting
         if extraFrosting {
             cost += Decimal(quantity)
         }
-
+        
         // $0.50/cake for sprinkles
         if addSprinkles {
             cost += Decimal(quantity) / 2
         }
-
+        
         return cost
     }
+    
 }
