@@ -8,13 +8,13 @@
 import SwiftUI
 
 struct AddView: View {
+    @Environment(\.modelContext) var modelContext
     @Environment(\.dismiss) var dismiss
 
     @State private var name = "Your Name"
     @State private var type = "Personal"
     @State private var amount = 0.0
 
-    var expenses: Expenses
 
     let types = ["Business", "Personal"]
 
@@ -37,16 +37,7 @@ struct AddView: View {
             .toolbar {
                 Button("Save") {
                     let item = ExpenseItem(name: name, type: type, amount: amount)
-                    if item.type == "Personal" {
-                        expenses.personalItems.append(item)
-                    } else if item.type == "Business" {
-                        expenses.businessItems.append(item)
-                    }
-                    
-                    if let encoded = try? JSONEncoder().encode(expenses) {
-                        UserDefaults.standard.set(encoded, forKey: "Expenses")
-                    }
-                    
+                    modelContext.insert(item)
                     dismiss()
                 }
                 
@@ -61,5 +52,5 @@ struct AddView: View {
 }
 
 #Preview {
-    AddView(expenses: Expenses())
+    AddView()
 }

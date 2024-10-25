@@ -6,37 +6,7 @@
 //
 
 import SwiftUI
-
-struct ExpenseItem: Identifiable, Codable {
-    var id = UUID()
-    let name: String
-    let type: String
-    let amount: Double
-}
-
-@Observable
-class Expenses: Codable {
-    var personalItems = [ExpenseItem]()
-    var businessItems = [ExpenseItem]()
-    //    {
-    //        didSet {
-    //            if let encoded = try? JSONEncoder().encode(items) {
-    //                UserDefaults.standard.set(encoded, forKey: "PersonalItems")
-    //            }
-    //        }
-    //    }
-    
-    //    init() {
-    //        if let savedItems = UserDefaults.standard.data(forKey: "Items") {
-    //            if let decodedItems = try? JSONDecoder().decode([ExpenseItem].self, from: savedItems) {
-    //                items = decodedItems
-    //                return
-    //            }
-    //        }
-    
-    //        items = []
-    //    }
-}
+import SwiftData
 
 struct MoneyStyle: ViewModifier{
     let color: Color
@@ -58,11 +28,21 @@ extension View{
             modifier(MoneyStyle(color: .red))
         }
     }
+    
+    
 }
 
-
 struct ContentView: View {
-    @State private var expenses = Expenses()
+    @Environment(\.modelContext) var modelContext
+    
+    @Query var expenses: [ExpenseItem]
+    @Query(filter: #Predicate<ExpenseItem> { item in
+        item.type == "Personal"
+    }) var personItems: [ExpenseItem]
+    
+    @Query(filter: #Predicate<ExpenseItem> { item in
+        item.type == "Business"
+    }) var businessItems: [ExpenseItem]
     
     @State private var showingAddExpense = false
     
@@ -70,7 +50,7 @@ struct ContentView: View {
         NavigationStack {
             List {
                 Section("Personal") {
-                    ForEach(expenses.personalItems) { item in
+                    ForEach(personItems) { item in
                         HStack {
                             VStack(alignment: .leading) {
                                 Text(item.name)
@@ -86,11 +66,11 @@ struct ContentView: View {
                         }
                         
                     }
-                    .onDelete(perform: removePersonItems)
+                    .onDelete(perform: removeItems)
                 }
                 
                 Section("Business") {
-                    ForEach(expenses.businessItems) { item in
+                    ForEach(businessItems) { item in
                         HStack {
                             VStack(alignment: .leading) {
                                 Text(item.name)
@@ -106,7 +86,7 @@ struct ContentView: View {
                         }
                         
                     }
-                    .onDelete(perform: removeBusinessItems)
+                    .onDelete(perform: removeItems)
                 }
             }
             .navigationTitle("iExpense")
@@ -116,31 +96,17 @@ struct ContentView: View {
                 }
                 
                 NavigationLink("Add Expense(link)") {
-                    AddView(expenses: expenses)
+                    AddView()
                 }
             }
             .sheet(isPresented: $showingAddExpense) {
-                AddView(expenses: expenses)
-            }
-        }
-        .onAppear(perform: initExpenses)
-    }
-    
-    func initExpenses() {
-        if let savedExpenses = UserDefaults.standard.data(forKey: "Expenses") {
-            if let decodedExpenses = try? JSONDecoder().decode(Expenses.self, from: savedExpenses) {
-                expenses = decodedExpenses
-                return
+                AddView()
             }
         }
     }
     
-    func removePersonItems(at offsets: IndexSet) {
-        expenses.personalItems.remove(atOffsets: offsets)
-    }
-    
-    func removeBusinessItems(at offsets: IndexSet) {
-        expenses.businessItems.remove(atOffsets: offsets)
+    func removeItems(at offsets: IndexSet) {
+//        expenses.remove(atOffsets: offsets)
     }
 }
 
