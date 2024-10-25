@@ -16,6 +16,11 @@ struct AddBookView: View {
     @State private var rating = 3
     @State private var genre = "Fantasy"
     @State private var review = ""
+    @State private var date = Date.now
+    
+    var canSave: Bool {
+        return !title.isEmpty && !author.isEmpty
+    }
 
     let genres = ["Fantasy", "Horror", "Kids", "Mystery", "Poetry", "Romance", "Thriller"]
 
@@ -31,6 +36,8 @@ struct AddBookView: View {
                             Text($0)
                         }
                     }
+                    
+                    DatePicker("select publish date:", selection: $date, displayedComponents: .date)
                 }
 
                 Section("Write a review") {
@@ -40,15 +47,18 @@ struct AddBookView: View {
 
                 Section {
                     Button("Save") {
-                        let newBook = Book(title: title, author: author, genre: genre, review: review, rating: rating)
+                        let newBook = Book(title: title, author: author, genre: genre, review: review, rating: rating, date: date )
                         modelContext.insert(newBook)
                         dismiss()
                     }
+                    .disabled(!canSave)
                 }
             }
             .navigationTitle("Add Book")
         }
     }
+    
+
 }
 
 #Preview {

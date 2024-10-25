@@ -34,6 +34,10 @@ struct DetailView: View {
             Text(book.author)
                 .font(.title)
                 .foregroundStyle(.secondary)
+            
+            Text(book.date, format: .dateTime.year().month().day())
+                .font(.title3)
+                .foregroundStyle(.secondary)
 
             Text(book.review)
                 .padding()

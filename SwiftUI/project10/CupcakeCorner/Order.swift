@@ -61,9 +61,7 @@ class Order: Codable {
         if name.isEmpty || streetAddress.isEmpty || city.isEmpty || zip.isEmpty {
             return false
         }
-        
-//        UserDefaults.standard.set(streetAddress, forKey: "UserAddress")
-        
+                
         return true
     }
     
