@@ -34,79 +34,67 @@ extension View{
 
 struct ContentView: View {
     @Environment(\.modelContext) var modelContext
+    @State private var showingUsers = "All"
     
-    @Query var expenses: [ExpenseItem]
-    @Query(filter: #Predicate<ExpenseItem> { item in
-        item.type == "Personal"
-    }) var personItems: [ExpenseItem]
-    
-    @Query(filter: #Predicate<ExpenseItem> { item in
-        item.type == "Business"
-    }) var businessItems: [ExpenseItem]
-    
+    @State private var sortOrder = [
+        SortDescriptor(\ExpenseItem.name),
+        SortDescriptor(\ExpenseItem.type)
+    ]
+            
     @State private var showingAddExpense = false
     
     var body: some View {
         NavigationStack {
-            List {
-                Section("Personal") {
-                    ForEach(personItems) { item in
-                        HStack {
-                            VStack(alignment: .leading) {
-                                Text(item.name)
-                                    .font(.headline)
-                                
-                                Text(item.type)
-                            }
-                            
-                            Spacer()
-                            
-                            Text(item.amount, format: .currency(code: Locale.current.currency?.identifier ?? "USD"))
-                                .moneyStyle(at: item.amount)
-                        }
-                        
-                    }
-                    .onDelete(perform: removeItems)
-                }
-                
-                Section("Business") {
-                    ForEach(businessItems) { item in
-                        HStack {
-                            VStack(alignment: .leading) {
-                                Text(item.name)
-                                    .font(.headline)
-                                
-                                Text(item.type)
-                            }
-                            
-                            Spacer()
-                            
-                            Text(item.amount, format: .currency(code: Locale.current.currency?.identifier ?? "USD"))
-                                .moneyStyle(at: item.amount)
-                        }
-                        
-                    }
-                    .onDelete(perform: removeItems)
-                }
-            }
+            ExpenseItemView(showingUsers: showingUsers, sortOrder: sortOrder)
             .navigationTitle("iExpense")
             .toolbar {
-                Button("Add Expense(sheet)", systemImage: "plus") {
-                    showingAddExpense = true
+//                Button("Add Expense(sheet)", systemImage: "plus") {
+//                    showingAddExpense = true
+//                }
+                
+                NavigationLink {
+                    AddView()
+                } label: {
+                    Image(systemName: "plus")
                 }
                 
-                NavigationLink("Add Expense(link)") {
-                    AddView()
+                Menu(showingUsers) {
+                    Picker("Display", selection: $showingUsers) {
+                        Text("All")
+                            .tag(
+                                "All"
+                            )
+                        Text("Personal")
+                            .tag(
+                                "Personal"
+                            )
+                        Text("Business")
+                            .tag(
+                                "Business"
+                            )
+                    }
                 }
+                
+                Menu("Sort", systemImage: "arrow.up.arrow.down") {
+                    Picker("Sort", selection: $sortOrder) {
+                        Text("Sort by Name")
+                            .tag([
+                                SortDescriptor(\ExpenseItem.name),
+                                SortDescriptor(\ExpenseItem.price)
+                            ])
+                        Text("Sort by Price")
+                            .tag([
+                                SortDescriptor(\ExpenseItem.price),
+                                SortDescriptor(\ExpenseItem.name)
+                            ])
+                    }
+                }
+                
             }
-            .sheet(isPresented: $showingAddExpense) {
-                AddView()
-            }
+//            .sheet(isPresented: $showingAddExpense) {
+//                AddView()
+//            }
         }
-    }
-    
-    func removeItems(at offsets: IndexSet) {
-//        expenses.remove(atOffsets: offsets)
     }
 }
 

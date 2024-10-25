@@ -13,12 +13,12 @@ class ExpenseItem: Identifiable {
     var id: UUID
     var name: String
     var type: String
-    var amount: Double
+    var price: Double
     
-    init(name: String, type: String, amount: Double) {
+    init(name: String, type: String, price: Double) {
         self.id = UUID()
         self.name = name
         self.type = type
-        self.amount = amount
+        self.price = price
     }
 }

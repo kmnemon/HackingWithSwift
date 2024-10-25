@@ -13,10 +13,9 @@ struct AddView: View {
 
     @State private var name = "Your Name"
     @State private var type = "Personal"
-    @State private var amount = 0.0
-
-
-    let types = ["Business", "Personal"]
+    @State private var price = 0.0
+    
+    let types = ["Personal", "Business"]
 
     var body: some View {
         NavigationStack {
@@ -29,14 +28,14 @@ struct AddView: View {
                     }
                 }
 
-                TextField("Amount", value: $amount, format: .currency(code: "USD"))
+                TextField("Price", value: $price, format: .currency(code: "USD"))
                     .keyboardType(.decimalPad)
             }
             .navigationTitle($name)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 Button("Save") {
-                    let item = ExpenseItem(name: name, type: type, amount: amount)
+                    let item = ExpenseItem(name: name, type: type, price: price)
                     modelContext.insert(item)
                     dismiss()
                 }
