@@ -11,11 +11,18 @@ import CoreLocation
 import LocalAuthentication
 
 extension ContentView {
+    enum AuthenticationError: Error {
+        case biometricNotAvailable
+        case authenticationFailed(Error)
+    }
+    
+    
     @Observable
     class ViewModel {
         private(set) var locations : [Location]
         var selectedPlace: Location?
         var isUnlocked = false
+        var error: Error?
         
         let savePath = URL.documentsDirectory.appending(path: "SavedPlaces")
         
@@ -65,11 +72,16 @@ extension ContentView {
                     if success {
                         self.isUnlocked = true
                     } else {
-                        
+//                        if let authenticationError = authenticationError {
+//                            self.error =  AuthenticationError.authenticationFailed(authenticationError)
+//                        } else {
+//                            print("covert NSError to Error failed")
+//                        }
                     }
                 }
+                
             } else {
-                // no biometrics
+                self.error = AuthenticationError.biometricNotAvailable
             }
         }
     }
