@@ -45,6 +45,20 @@ struct ContentView: View {
     @State private var fadeOuts = [1.0, 1.0, 1.0]
     @State private var scales = [1.0, 1.0, 1.0]
     
+    let labels = [
+        "Estonia": "Flag with three horizontal stripes. Top stripe blue, middle stripe black, bottom stripe white.",
+        "France": "",
+        "Germany": "",
+        "Ireland": "",
+        "Italy": "",
+        "Nigeria": "",
+        "Poland": "",
+        "Spain": "",
+        "UK": "",
+        "Ukraine": "",
+        "US": ""
+    ]
+    
 
     var body: some View {
         ZStack {
@@ -90,6 +104,7 @@ struct ContentView: View {
                                 .opacity(fadeOuts[number])
                                 .scaleEffect(scales[number])
                         }
+                        .accessibilityLabel(labels[countries[number], default: "Unknown flag"])
                        
                     }
                 }
