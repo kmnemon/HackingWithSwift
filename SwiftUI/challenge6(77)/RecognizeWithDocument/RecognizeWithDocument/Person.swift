@@ -10,12 +10,12 @@ import Foundation
 import PhotosUI
 
 @Observable
-class Person: Identifiable, Codable {
+class Person: Identifiable, Codable, Comparable {
     var id: UUID
     var name: String
     var photoData: Data
     
-    var photeImage: Image? {
+    var photoImage: Image? {
         if let uiImage = UIImage(data: photoData) {
             return Image(uiImage: uiImage)
         }
@@ -26,5 +26,13 @@ class Person: Identifiable, Codable {
         self.id = UUID()
         self.name = name
         self.photoData = photo
+    }
+    
+    static func <(lhs: Person, rhs: Person) -> Bool {
+        return lhs.name < rhs.name
+    }
+    
+    static func ==(lhs: Person, rhs: Person) -> Bool {
+        return lhs.id == rhs.id
     }
 }

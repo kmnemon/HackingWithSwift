@@ -20,12 +20,12 @@ struct ContentView: View {
     
     var body: some View {
         NavigationStack {
-            List(viewModel.persons) { person in
+            List(viewModel.persons.sorted()) { person in
                 NavigationLink {
-                    DetaiView()
+                    DetaiView(person: person)
                 } label: {
                     HStack {
-                        person.photeImage?
+                        person.photoImage?
                             .resizable()
                             .scaledToFit()
                             .frame(width: 30, height: 30)
