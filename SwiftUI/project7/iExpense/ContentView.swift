@@ -84,7 +84,9 @@ struct ContentView: View {
                             Text(item.amount, format: .currency(code: Locale.current.currency?.identifier ?? "USD"))
                                 .moneyStyle(at: item.amount)
                         }
-                        
+                        .accessibilityElement()
+                        .accessibilityLabel("Name is \(item.name) and Value is \(item.amount)")
+                        .accessibilityHint("Type is \(item.type)")
                     }
                     .onDelete(perform: removePersonItems)
                 }
@@ -104,7 +106,9 @@ struct ContentView: View {
                             Text(item.amount, format: .currency(code: Locale.current.currency?.identifier ?? "USD"))
                                 .moneyStyle(at: item.amount)
                         }
-                        
+                        .accessibilityElement()
+                        .accessibilityLabel("Name is \(item.name) and Value is \(item.amount)")
+                        .accessibilityHint("Type is \(item.type)")
                     }
                     .onDelete(perform: removeBusinessItems)
                 }
