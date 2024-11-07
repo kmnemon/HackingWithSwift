@@ -16,6 +16,7 @@
 		51A854DA27839F1200A8D52D /* ProspectsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51A854D927839F1200A8D52D /* ProspectsView.swift */; };
 		51A854DC27839F1900A8D52D /* MeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51A854DB27839F1900A8D52D /* MeView.swift */; };
 		51A854E22783A7EC00A8D52D /* Prospect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51A854E12783A7EC00A8D52D /* Prospect.swift */; };
+		8A5ABFE52CDCC33B003CBC1A /* ProspectEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5ABFE42CDCC333003CBC1A /* ProspectEditView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		51A854D927839F1200A8D52D /* ProspectsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProspectsView.swift; sourceTree = "<group>"; };
 		51A854DB27839F1900A8D52D /* MeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeView.swift; sourceTree = "<group>"; };
 		51A854E12783A7EC00A8D52D /* Prospect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Prospect.swift; sourceTree = "<group>"; };
+		8A5ABFE42CDCC333003CBC1A /* ProspectEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProspectEditView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,6 +67,7 @@
 				515ABF3C276947480016C3F8 /* ContentView.swift */,
 				51A854E12783A7EC00A8D52D /* Prospect.swift */,
 				51A854D927839F1200A8D52D /* ProspectsView.swift */,
+				8A5ABFE42CDCC333003CBC1A /* ProspectEditView.swift */,
 				51A854DB27839F1900A8D52D /* MeView.swift */,
 				51920CE02786536700C66951 /* ImageSaver.swift */,
 				515ABF3E2769474A0016C3F8 /* Assets.xcassets */,
@@ -160,6 +163,7 @@
 				51A854DC27839F1900A8D52D /* MeView.swift in Sources */,
 				51920CE12786536700C66951 /* ImageSaver.swift in Sources */,
 				51A854E22783A7EC00A8D52D /* Prospect.swift in Sources */,
+				8A5ABFE52CDCC33B003CBC1A /* ProspectEditView.swift in Sources */,
 				51A854DA27839F1200A8D52D /* ProspectsView.swift in Sources */,
 				515ABF3D276947480016C3F8 /* ContentView.swift in Sources */,
 				515ABF3B276947480016C3F8 /* HotProspectsApp.swift in Sources */,
