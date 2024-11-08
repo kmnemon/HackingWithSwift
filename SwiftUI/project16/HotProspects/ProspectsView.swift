@@ -16,16 +16,21 @@ struct ProspectsView: View {
     }
     
     @Environment(\.modelContext) var modelContext
+    
+    @State private var sortOrder = [
+        SortDescriptor(\Prospect.name)
+    ]
+    
     @Query(sort: \Prospect.name) var prospects: [Prospect]
     
     @State private var isShowingScanner = false
     @State private var selectedProspects = Set<Prospect>()
     
-    let filter: FilterType
+    var filter: FilterType
     
     var body: some View {
         NavigationStack {
-            List(prospects, selection: $selectedProspects) { prospect in
+            List(prospects.sorted(){$0.name > $1.name}, selection: $selectedProspects) { prospect in
                 NavigationLink {
                     ProspectEditView(perspect: prospect)
                 } label: {
@@ -74,18 +79,33 @@ struct ProspectsView: View {
                 }
                 .tag(prospect)
             }
-            
             .navigationTitle(title)
             .toolbar {
+                ToolbarItem(placement: .topBarLeading) {
+                    EditButton()
+                }
+                
+                ToolbarItem(placement: .topBarTrailing) {
+                    Menu("Sort", systemImage: "arrow.up.arrow.down") {
+                        Picker("Sort", selection: $sortOrder) {
+                            Text("Sort by Name")
+                                .tag([
+                                    SortDescriptor(\Prospect.name)
+                                ])
+                            Text("Sort by Recent")
+                                .tag([
+                                    SortDescriptor(\Prospect.emailAddress)
+                                ])
+                        }
+                    }
+                }
+                
                 ToolbarItem(placement: .topBarTrailing) {
                     Button("Scan", systemImage: "qrcode.viewfinder") {
                        isShowingScanner = true
                     }
                 }
            
-                ToolbarItem(placement: .topBarLeading) {
-                    EditButton()
-                }
                 
                 if selectedProspects.isEmpty == false {
                     ToolbarItem(placement: .bottomBar) {
@@ -118,9 +138,10 @@ struct ProspectsView: View {
             
             _prospects = Query(filter: #Predicate {
                 $0.isContacted == showContactedOnly
-            }, sort: [SortDescriptor(\Prospect.name)])
+            }, sort: sortOrder)
         }
     }
+    
     
     func handleScan(result: Result<ScanResult, ScanError>) {
         isShowingScanner = false
