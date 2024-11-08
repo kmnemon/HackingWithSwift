@@ -8,6 +8,7 @@
 
 /* Begin PBXFileReference section */
 		8A5ABFC42CDB594A003CBC1A /* RecognizeWithDocument.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RecognizeWithDocument.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8A5AC0222CDDAE7E003CBC1A /* RecognizeWithDocument.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = RecognizeWithDocument.xcodeproj; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -42,6 +43,11 @@
 			children = (
 				8A5ABFC42CDB594A003CBC1A /* RecognizeWithDocument.app */,
 			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		8A5AC0242CDDAE7E003CBC1A /* Products */ = {
+			isa = PBXGroup;
 			name = Products;
 			sourceTree = "<group>";
 		};
@@ -97,6 +103,12 @@
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 8A5ABFC52CDB594A003CBC1A /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 8A5AC0242CDDAE7E003CBC1A /* Products */;
+					ProjectRef = 8A5AC0222CDDAE7E003CBC1A /* RecognizeWithDocument.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				8A5ABFC32CDB594A003CBC1A /* RecognizeWithDocument */,

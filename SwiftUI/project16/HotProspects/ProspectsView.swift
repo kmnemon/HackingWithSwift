@@ -17,9 +17,7 @@ struct ProspectsView: View {
     
     @Environment(\.modelContext) var modelContext
     
-    @State private var sortOrder = [
-        SortDescriptor(\Prospect.name)
-    ]
+    @State private var sortOrder = "Name"
     
     @Query(sort: \Prospect.name) var prospects: [Prospect]
     
@@ -30,18 +28,30 @@ struct ProspectsView: View {
     
     var body: some View {
         NavigationStack {
-            List(prospects.sorted(){$0.name > $1.name}, selection: $selectedProspects) { prospect in
+            List(prospects.sorted(){
+                if sortOrder == "Name" {
+                    return $0.name < $1.name
+                } else if sortOrder == "EmalAddress" {
+                    return $0.emailAddress < $1.emailAddress
+                } else {
+                    return $0.addDate < $1.addDate
+                }
+            }, selection: $selectedProspects) { prospect in
                 NavigationLink {
                     ProspectEditView(perspect: prospect)
                 } label: {
                     HStack {
                         VStack(alignment: .leading) {
-                            Text(prospect.name)
-                                .font(.headline)
+                            HStack {
+                                Text(prospect.name)
+                                    .font(.headline)
+                                Text(prospect.addDate, format: .dateTime.day().month().year())
+                            }
                             Text(prospect.emailAddress)
                                 .foregroundColor(.secondary)
                         }
                         
+
                         Spacer()
                         
                         if filter == .none {
@@ -89,13 +99,11 @@ struct ProspectsView: View {
                     Menu("Sort", systemImage: "arrow.up.arrow.down") {
                         Picker("Sort", selection: $sortOrder) {
                             Text("Sort by Name")
-                                .tag([
-                                    SortDescriptor(\Prospect.name)
-                                ])
-                            Text("Sort by Recent")
-                                .tag([
-                                    SortDescriptor(\Prospect.emailAddress)
-                                ])
+                                .tag("Name")
+                            Text("Sort by EmailAddress")
+                                .tag("EmailAddress")
+                            Text("Sory by Recent Added")
+                                .tag("Recent")
                         }
                     }
                 }
@@ -138,7 +146,7 @@ struct ProspectsView: View {
             
             _prospects = Query(filter: #Predicate {
                 $0.isContacted == showContactedOnly
-            }, sort: sortOrder)
+            }, sort: [SortDescriptor(\Prospect.name)])
         }
     }
     
@@ -151,7 +159,7 @@ struct ProspectsView: View {
                 let details = result.string.components(separatedBy: "\n")
                 guard details.count == 2 else { return }
                 
-                let person = Prospect(name: details[0], emailAddress: details[1], isContacted: false)
+            let person = Prospect(name: details[0], emailAddress: details[1], isContacted: false, addDate: Date.now)
                 modelContext.insert(person)
                 
             case .failure(let error):
