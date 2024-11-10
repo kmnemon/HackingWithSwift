@@ -92,6 +92,10 @@ struct CardView: View {
                         } else {
                             feedback.notificationOccurred(.error)
                         }
+                        
+//                        if offset.width < 0 {
+//                            insert?()
+//                        }
 
                         removal?()
                     } else {
