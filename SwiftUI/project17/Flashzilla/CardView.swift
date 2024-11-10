@@ -7,6 +7,24 @@
 
 import SwiftUI
 
+extension View {
+    func fillCardColor(offset: CGSize, color: Color?) -> Color {
+        if offset.width > 0 {
+            return Color.green
+        } else if offset.width < 0 {
+           return Color.red
+        } else {
+            if let color = color {
+                return color
+            }
+        }
+        
+        return Color.clear
+    }
+}
+
+
+
 struct CardView: View {
     @Environment(\.accessibilityDifferentiateWithoutColor) var differentiateWithoutColor
     @Environment(\.accessibilityVoiceOverEnabled) var voiceOverEnabled
@@ -15,6 +33,7 @@ struct CardView: View {
 
     @State private var isShowingAnswer = false
     @State private var offset = CGSize.zero
+    @State private var color: Color?
     
     let card: Card
     var removal: (() -> Void)? = nil
@@ -31,7 +50,7 @@ struct CardView: View {
                     differentiateWithoutColor
                     ? nil
                     : RoundedRectangle(cornerRadius: 25, style: .continuous)
-                        .fill(offset.width > 0 ? .green : .red)
+                        .fill(fillCardColor(offset: offset, color: color))
                 )
                 .shadow(radius: 10)
 
@@ -76,6 +95,12 @@ struct CardView: View {
 
                         removal?()
                     } else {
+                        if offset.width > 0 {
+                            color = .green
+                        } else if offset.width < 0 {
+                            color = .red
+                        }
+                        
                         offset = .zero
                     }
                 }
