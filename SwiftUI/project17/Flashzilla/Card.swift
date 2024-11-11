@@ -8,9 +8,15 @@
 import Foundation
 
 
-struct Card: Codable {
+struct Card: Codable, Identifiable, Equatable {
+    let id: UUID
     let prompt: String
     let answer: String
+    
+    static func ==(lhs: Card, rhs: Card) -> Bool {
+        if lhs.id != rhs.id { return false }
+        return true
+    }
 
-    static let example = Card(prompt: "Who played the 13th Doctor in Doctor Who?", answer: "Jodie Whittaker")
+    static let example = Card(id: UUID(), prompt: "Who played the 13th Doctor in Doctor Who?", answer: "Jodie Whittaker")
 }

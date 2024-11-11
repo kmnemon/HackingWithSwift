@@ -163,6 +163,17 @@ struct ContentView: View {
         }
     }
     
+    func removeCard(_ card: Card) {
+        var index = cards.firstIndex(of: card)
+        if let index = index {
+            cards.remove(at: index)
+        }
+        
+        if cards.isEmpty {
+            isActive = false
+        }
+    }
+    
 
     func resetCards() {
         timeRemaining = 100
