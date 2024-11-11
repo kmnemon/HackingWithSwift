@@ -8,32 +8,41 @@
 import SwiftUI
 
 extension View {
+    func stacked(card: Card, in cards: [Card]) -> some View {
+        let total = cards.count
+        let position = Int(cards.firstIndex(of: card)!)
+        
+        let offset = Double(total - position)
+        return self.offset(x: 0, y: offset * 10)
+    }
+    
     func stacked(at position: Int, in total: Int) -> some View {
         let offset = Double(total - position)
         return self.offset(x: 0, y: offset * 10)
     }
+    
 }
 
 struct ContentView: View {
     @Environment(\.accessibilityDifferentiateWithoutColor) var differentiateWithoutColor
     @Environment(\.accessibilityVoiceOverEnabled) var voiceOverEnabled
     @State private var cards = [Card]()
-//    @State private var cards = Array<Card>(repeating: .example, count: 10)
-
+    //    @State private var cards = Array<Card>(repeating: .example, count: 10)
+    
     @State private var timeRemaining = 100
-    let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
-
+    let timer = Timer.publish(every: 1000, on: .main, in: .common).autoconnect()
+    
     @Environment(\.scenePhase) var scenePhase
     @State private var isActive = true
-
+    
     @State private var showingEditScreen = false
-
+    
     var body: some View {
         ZStack {
             Image(decorative: 	"background")
                 .resizable()
                 .ignoresSafeArea()
-
+            
             VStack {
                 Text("Time: \(timeRemaining)")
                     .font(.largeTitle)
@@ -42,21 +51,23 @@ struct ContentView: View {
                     .padding(.vertical, 5)
                     .background(.black.opacity(0.75))
                     .clipShape(Capsule())
-
+                
                 ZStack {
-                    ForEach(0..<cards.count, id: \.self) { index in
-                        CardView(card: cards[index]) {
+                    ForEach(cards) { card in
+                        CardView(card: card) {
                             withAnimation {
-                                removeCard(at: index)
+                                removeCard()
                             }
+                        } insert: {
+                            insertCard(card: card)
                         }
-                        .stacked(at: index, in: cards.count)
-                        .allowsHitTesting(index == cards.count - 1)
-                        .accessibilityHidden(index < cards.count - 1)
+                        .stacked(card: card, in: cards)
+                        .allowsHitTesting(card == cards.last)
+                        .accessibilityHidden(card != cards.last)
                     }
                 }
                 .allowsHitTesting(timeRemaining > 0)
-
+                
                 if cards.isEmpty {
                     Button("Start Again", action: resetCards)
                         .padding()
@@ -65,11 +76,11 @@ struct ContentView: View {
                         .clipShape(Capsule())
                 }
             }
-
+            
             VStack {
                 HStack {
                     Spacer()
-
+                    
                     Button {
                         showingEditScreen = true
                     } label: {
@@ -79,17 +90,17 @@ struct ContentView: View {
                             .clipShape(Circle())
                     }
                 }
-
+                
                 Spacer()
             }
             .foregroundStyle(.white)
             .font(.largeTitle)
             .padding()
-
+            
             if differentiateWithoutColor || voiceOverEnabled {
                 VStack {
                     Spacer()
-
+                    
                     HStack {
                         Button {
                             withAnimation {
@@ -103,9 +114,9 @@ struct ContentView: View {
                         }
                         .accessibilityLabel("Wrong")
                         .accessibilityHint("Mark your answer as being incorrect")
-
+                        
                         Spacer()
-
+                        
                         Button {
                             withAnimation {
                                 removeCard(at: cards.count - 1)
@@ -127,7 +138,7 @@ struct ContentView: View {
         }
         .onReceive(timer) { time in
             guard isActive else { return }
-
+            
             if timeRemaining > 0 {
                 timeRemaining -= 1
             }
@@ -144,7 +155,7 @@ struct ContentView: View {
         .sheet(isPresented: $showingEditScreen, onDismiss: resetCards, content: EditCards.init)
         .onAppear(perform: resetCards)
     }
-
+    
     func loadData() {
         if let data = UserDefaults.standard.data(forKey: "Cards") {
             if let decoded = try? JSONDecoder().decode([Card].self, from: data) {
@@ -152,29 +163,33 @@ struct ContentView: View {
             }
         }
     }
-
+    
     func removeCard(at index: Int) {
         guard index >= 0 else { return }
-
+        
         cards.remove(at: index)
-
-        if cards.isEmpty {
-            isActive = false
-        }
-    }
-    
-    func removeCard(_ card: Card) {
-        var index = cards.firstIndex(of: card)
-        if let index = index {
-            cards.remove(at: index)
-        }
         
         if cards.isEmpty {
             isActive = false
         }
     }
     
-
+    func insertCard(card: Card) {
+        cards.insert(Card(id: UUID(), prompt: card.prompt, answer: card.answer), at: 0)
+    }
+    
+    func removeCard() {
+        guard !cards.isEmpty else { return }
+        
+        cards.remove(at: cards.count - 1)
+        
+        if cards.isEmpty {
+            isActive = false
+        }
+        
+    }
+    
+    
     func resetCards() {
         timeRemaining = 100
         isActive = true

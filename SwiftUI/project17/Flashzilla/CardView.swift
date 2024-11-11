@@ -37,6 +37,7 @@ struct CardView: View {
     
     let card: Card
     var removal: (() -> Void)? = nil
+    var insert: (() -> Void)? = nil
 
     var body: some View {
         ZStack {
@@ -77,7 +78,7 @@ struct CardView: View {
         .frame(width: 450, height: 250)
         .rotationEffect(.degrees(Double(offset.width / 5)))
         .offset(x: offset.width * 5, y: 0)
-        .opacity(2 - Double(abs(offset.width / 50)))
+//        .opacity(2 - Double(abs(offset.width / 50)))
         .accessibilityAddTraits(.isButton)
         .gesture(
             DragGesture()
@@ -93,11 +94,12 @@ struct CardView: View {
                             feedback.notificationOccurred(.error)
                         }
                         
-//                        if offset.width < 0 {
-//                            insert?()
-//                        }
-
                         removal?()
+                        
+                        if offset.width < 0 {
+                            insert?()
+                        }
+
                     } else {
                         if offset.width > 0 {
                             color = .green
