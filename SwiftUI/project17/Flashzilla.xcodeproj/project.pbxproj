@@ -14,6 +14,7 @@
 		51B67857278E45390095B91A /* EditCards.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51B67856278E45390095B91A /* EditCards.swift */; };
 		51BA8C59278B11A900A3D9A5 /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51BA8C58278B11A900A3D9A5 /* Card.swift */; };
 		51BA8C5B278B125C00A3D9A5 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51BA8C5A278B125C00A3D9A5 /* CardView.swift */; };
+		8A5AC0332CE1F18A003CBC1A /* Cards.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5AC0322CE1F187003CBC1A /* Cards.swift */; };
 		8AC80B0A2CE17EDC000317A3 /* ContentView 2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AC80B062CE17EDC000317A3 /* ContentView 2.swift */; };
 		8AC80B0B2CE17EDC000317A3 /* Card 2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AC80B092CE17EDC000317A3 /* Card 2.swift */; };
 		8AC80B0C2CE17EDC000317A3 /* CardView 2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AC80B072CE17EDC000317A3 /* CardView 2.swift */; };
@@ -30,6 +31,7 @@
 		51B67856278E45390095B91A /* EditCards.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCards.swift; sourceTree = "<group>"; };
 		51BA8C58278B11A900A3D9A5 /* Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
 		51BA8C5A278B125C00A3D9A5 /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
+		8A5AC0322CE1F187003CBC1A /* Cards.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cards.swift; sourceTree = "<group>"; };
 		8AC80B062CE17EDC000317A3 /* ContentView 2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContentView 2.swift"; sourceTree = "<group>"; };
 		8AC80B072CE17EDC000317A3 /* CardView 2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CardView 2.swift"; sourceTree = "<group>"; };
 		8AC80B082CE17EDC000317A3 /* EditCards 2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EditCards 2.swift"; sourceTree = "<group>"; };
@@ -67,6 +69,7 @@
 		51920CEF27886EB100C66951 /* Flashzilla */ = {
 			isa = PBXGroup;
 			children = (
+				8A5AC0322CE1F187003CBC1A /* Cards.swift */,
 				51920CF027886EB100C66951 /* FlashzillaApp.swift */,
 				51920CF227886EB100C66951 /* ContentView.swift */,
 				51BA8C5A278B125C00A3D9A5 /* CardView.swift */,
@@ -174,6 +177,7 @@
 				8AC80B0C2CE17EDC000317A3 /* CardView 2.swift in Sources */,
 				51BA8C59278B11A900A3D9A5 /* Card.swift in Sources */,
 				51BA8C5B278B125C00A3D9A5 /* CardView.swift in Sources */,
+				8A5AC0332CE1F18A003CBC1A /* Cards.swift in Sources */,
 				8AC80B0F2CE17EF5000317A3 /* FlashzillaApp 2.swift in Sources */,
 				8AC80B0B2CE17EDC000317A3 /* Card 2.swift in Sources */,
 				8AC80B0D2CE17EDC000317A3 /* EditCards 2.swift in Sources */,

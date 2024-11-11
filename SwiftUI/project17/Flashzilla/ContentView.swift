@@ -20,13 +20,12 @@ extension View {
         let offset = Double(total - position)
         return self.offset(x: 0, y: offset * 10)
     }
-    
 }
 
 struct ContentView: View {
     @Environment(\.accessibilityDifferentiateWithoutColor) var differentiateWithoutColor
     @Environment(\.accessibilityVoiceOverEnabled) var voiceOverEnabled
-    @State private var cards = [Card]()
+    var cards = Cards(cards: [])
     //    @State private var cards = Array<Card>(repeating: .example, count: 10)
     
     @State private var timeRemaining = 100
@@ -53,7 +52,7 @@ struct ContentView: View {
                     .clipShape(Capsule())
                 
                 ZStack {
-                    ForEach(cards) { card in
+                    ForEach(cards.items) { card in
                         CardView(card: card) {
                             withAnimation {
                                 removeCard()
@@ -61,14 +60,14 @@ struct ContentView: View {
                         } insert: {
                             insertCard(card: card)
                         }
-                        .stacked(card: card, in: cards)
-                        .allowsHitTesting(card == cards.last)
-                        .accessibilityHidden(card != cards.last)
+                        .stacked(card: card, in: cards.items)
+                        .allowsHitTesting(card == cards.items.last)
+                        .accessibilityHidden(card != cards.items.last)
                     }
                 }
                 .allowsHitTesting(timeRemaining > 0)
                 
-                if cards.isEmpty {
+                if cards.items.isEmpty {
                     Button("Start Again", action: resetCards)
                         .padding()
                         .background(.white)
@@ -104,7 +103,7 @@ struct ContentView: View {
                     HStack {
                         Button {
                             withAnimation {
-                                removeCard(at: cards.count - 1)
+                                removeCard(at: cards.items.count - 1)
                             }
                         } label: {
                             Image(systemName: "xmark.circle")
@@ -119,7 +118,7 @@ struct ContentView: View {
                         
                         Button {
                             withAnimation {
-                                removeCard(at: cards.count - 1)
+                                removeCard(at: cards.items.count - 1)
                             }
                         } label: {
                             Image(systemName: "checkmark.circle")
@@ -145,7 +144,7 @@ struct ContentView: View {
         }
         .onChange(of: scenePhase) { newPhase in
             if newPhase == .active {
-                if cards.isEmpty == false {
+                if cards.items.isEmpty == false {
                     isActive = true
                 }
             } else {
@@ -156,34 +155,27 @@ struct ContentView: View {
         .onAppear(perform: resetCards)
     }
     
-    func loadData() {
-        if let data = UserDefaults.standard.data(forKey: "Cards") {
-            if let decoded = try? JSONDecoder().decode([Card].self, from: data) {
-                cards = decoded
-            }
-        }
-    }
     
     func removeCard(at index: Int) {
         guard index >= 0 else { return }
         
-        cards.remove(at: index)
+        cards.items.remove(at: index)
         
-        if cards.isEmpty {
+        if cards.items.isEmpty {
             isActive = false
         }
     }
     
     func insertCard(card: Card) {
-        cards.insert(Card(id: UUID(), prompt: card.prompt, answer: card.answer), at: 0)
+        cards.items.insert(Card(id: UUID(), prompt: card.prompt, answer: card.answer), at: 0)
     }
     
     func removeCard() {
-        guard !cards.isEmpty else { return }
+        guard !cards.items.isEmpty else { return }
         
-        cards.remove(at: cards.count - 1)
+        cards.items.remove(at: cards.items.count - 1)
         
-        if cards.isEmpty {
+        if cards.items.isEmpty {
             isActive = false
         }
         
@@ -193,7 +185,7 @@ struct ContentView: View {
     func resetCards() {
         timeRemaining = 100
         isActive = true
-        loadData()
+        cards.loadData()
     }
 }
 

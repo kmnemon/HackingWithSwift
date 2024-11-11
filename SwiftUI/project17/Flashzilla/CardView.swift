@@ -78,7 +78,7 @@ struct CardView: View {
         .frame(width: 450, height: 250)
         .rotationEffect(.degrees(Double(offset.width / 5)))
         .offset(x: offset.width * 5, y: 0)
-//        .opacity(2 - Double(abs(offset.width / 50)))
+        .opacity(2 - Double(abs(offset.width / 50)))
         .accessibilityAddTraits(.isButton)
         .gesture(
             DragGesture()
