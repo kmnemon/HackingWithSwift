@@ -38,6 +38,12 @@ struct ResortView: View {
                 .background(Color.primary.opacity(0.1))
                 .dynamicTypeSize(...DynamicTypeSize.xxxLarge)
                 
+                HStack {
+                    Spacer()
+                    Text("Photos by \(resort.imageCredit)")
+                        .foregroundStyle(.secondary)
+                }
+                
                 Group {
                     Text(resort.description)
                         .padding(.vertical)

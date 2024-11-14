@@ -28,15 +28,7 @@ struct ProspectsView: View {
     
     var body: some View {
         NavigationStack {
-            List(prospects.sorted(){
-                if sortOrder == "Name" {
-                    return $0.name < $1.name
-                } else if sortOrder == "EmalAddress" {
-                    return $0.emailAddress < $1.emailAddress
-                } else {
-                    return $0.addDate < $1.addDate
-                }
-            }, selection: $selectedProspects) { prospect in
+            List(sortedProspects, selection: $selectedProspects) { prospect in
                 NavigationLink {
                     ProspectEditView(perspect: prospect)
                 } label: {
@@ -202,6 +194,24 @@ struct ProspectsView: View {
                     }
                 }
             }
+        }
+    }
+    
+    func sortProspects(prospects: [Prospect]) -> [Prospect] {
+        if sortOrder == "Name" {
+            return prospects.sorted() {$0.name < $1.name}
+        } else if sortOrder == "EmailAddress" {
+            return prospects.sorted() {$0.emailAddress < $1.emailAddress}
+        } else {
+            return prospects.sorted() {$0.addDate < $1.addDate}
+        }
+    }
+    
+    var sortedProspects: [Prospect] {
+        switch sortOrder {
+            case "EmailAddress": return prospects.sorted() {$0.emailAddress < $1.emailAddress}
+            case "Recent": return prospects.sorted() {$0.addDate < $1.addDate}
+            default: return prospects.sorted() {$0.name < $1.name}
         }
     }
 }
