@@ -8,7 +8,7 @@
 import Foundation
 
 @Observable
-class Dice: Identifiable {
+class Dice: Identifiable, Equatable, Codable {
     var id: UUID
     var type: Int
     var value: Int
@@ -17,6 +17,10 @@ class Dice: Identifiable {
         self.id = UUID()
         self.type = type
         self.value = type
+    }
+    
+    static func ==(lhs: Dice, rhs: Dice) -> Bool {
+        return lhs.id == rhs.id
     }
     
     func roll() {
